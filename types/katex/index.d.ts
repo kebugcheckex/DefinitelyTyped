@@ -5,10 +5,26 @@
 
 export as namespace katex;
 
+interface StrictCallback {
+    (errorCode: number, errorMsg: string, token: any): void
+}
+
+ interface Macros {
+    [propName: string]: string;
+ }
+
 export interface KatexOptions {
     displayMode?: boolean;
-    breakOnUnsupportedCmds?: boolean;
+    throwOnError?: boolean;
     errorColor?: string;
+    macros?: Macros;
+    colorIsTextColor?: boolean;
+    maxSize?: number;
+    maxExpand?: number;
+    allowedProtocols: string[];
+    strict?: boolean|string|StrictCallback;
+    breakOnUnsupportedCmds?: boolean;
+    
 }
 
 export class ParseError implements Error {
@@ -19,7 +35,7 @@ export class ParseError implements Error {
 }
 
 /**
- * Renders a TeX expression into the specified DOM element
+ * Renders a TeX expression into the specified DOM element`
  * @param tex A TeX expression
  * @param element The DOM element to render into
  * @param options KaTeX options
